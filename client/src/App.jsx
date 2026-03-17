@@ -30,6 +30,8 @@ const App = () => {
         <Route element={<Layout />}>
           <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />
           <Route path="/analyzer" element={<PageWrapper><Analyzer algorithmsData={algorithmsData} /></PageWrapper>} />
+          <Route path="/analyse" element={<Navigate to="/analyzer" replace />} />
+          <Route path="/analyze" element={<Navigate to="/analyzer" replace />} />
           <Route path="/compare" element={<PageWrapper><Compare algorithmsData={algorithmsData} /></PageWrapper>} />
           <Route path="/theory" element={<PageWrapper><Theory algorithmsData={algorithmsData} /></PageWrapper>} />
           <Route path="/reports" element={<PageWrapper><Report /></PageWrapper>} />
