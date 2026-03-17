@@ -38,8 +38,24 @@ AlgoVision/
         string_matching/
       services/
     tests/
+  AlgoVision_Project_Presentation.pptx
   README.md
 ```
+
+## Project Presentation File
+- The project deck is available at the repository root:
+  - `AlgoVision_Project_Presentation.pptx`
+- Absolute path example:
+  - `/path/to/Algo-Vision/AlgoVision_Project_Presentation.pptx`
+
+### If you still can't find it
+- Make sure you are on the branch that contains the latest docs/changes:
+  - `git fetch --all`
+  - `git checkout copilot/analysis-of-data`
+- Then verify from repository root using your shell:
+  - **PowerShell (Windows):** `Get-ChildItem -Path . -Filter "AlgoVision_Project_Presentation.pptx" -Recurse`
+  - **CMD (Windows):** `dir /s /b AlgoVision_Project_Presentation.pptx`
+  - **Git Bash / Linux / macOS:** `find . -maxdepth 3 -name "AlgoVision_Project_Presentation.pptx"`
 
 ## Setup
 ### Backend
