@@ -46,7 +46,7 @@ AlgoVision/
 - The project deck is available at the repository root:
   - `AlgoVision_Project_Presentation.pptx`
 - Absolute path example:
-  - `/home/runner/work/Algo-Vision/Algo-Vision/AlgoVision_Project_Presentation.pptx`
+  - `/path/to/Algo-Vision/AlgoVision_Project_Presentation.pptx`
 
 ## Setup
 ### Backend
