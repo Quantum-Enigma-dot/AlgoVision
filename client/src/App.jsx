@@ -7,6 +7,10 @@ import Analyzer from "./pages/Analyzer.jsx";
 import Compare from "./pages/Compare.jsx";
 import Theory from "./pages/Theory.jsx";
 import Report from "./pages/Report.jsx";
+import AIAdvisor from "./pages/AIAdvisor.jsx";
+import Benchmark from "./pages/Benchmark.jsx";
+import Playground from "./pages/Playground.jsx";
+import AlgoVisualizer from "./pages/AlgoVisualizer.jsx";
 import { ALGORITHM_CATALOG } from "./data/algorithms.js";
 
 const PageWrapper = ({ children }) => (
@@ -36,6 +40,10 @@ const App = () => {
           <Route path="/theory" element={<PageWrapper><Theory algorithmsData={algorithmsData} /></PageWrapper>} />
           <Route path="/reports" element={<PageWrapper><Report /></PageWrapper>} />
           <Route path="/report" element={<Navigate to="/reports" replace />} />
+          <Route path="/ai-advisor" element={<PageWrapper><AIAdvisor /></PageWrapper>} />
+          <Route path="/benchmark" element={<PageWrapper><Benchmark algorithmsData={algorithmsData} /></PageWrapper>} />
+          <Route path="/playground" element={<PageWrapper><Playground /></PageWrapper>} />
+          <Route path="/algo-visualizer" element={<PageWrapper><AlgoVisualizer /></PageWrapper>} />
         </Route>
       </Routes>
     </AnimatePresence>

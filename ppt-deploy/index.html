@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AlgoVision — Project Presentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg-dark: #06080f;
+    --bg-slide: #0a0f1c;
+    --bg-card: rgba(15, 23, 42, 0.7);
+    --text-primary: #e6f1ff;
+    --text-secondary: rgba(230, 241, 255, 0.6);
+    --text-muted: rgba(230, 241, 255, 0.35);
+    --accent-emerald: #10b981;
+    --accent-violet: #8b5cf6;
+    --accent-cyan: #22d3ee;
+    --accent-pink: #ec4899;
+    --accent-amber: #f59e0b;
+    --accent-blue: #3b82f6;
+    --border: rgba(148, 163, 184, 0.15);
+    --gradient-1: linear-gradient(135deg, #10b981, #22d3ee);
+    --gradient-2: linear-gradient(135deg, #8b5cf6, #ec4899);
+    --gradient-3: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  }
+
+  html { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg-dark);
+    color: var(--text-primary);
+    overflow-x: hidden;
+  }
+
+  /* ─── Slide System ─── */
+  .slide {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .slide::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(800px 500px at 10% 20%, rgba(16, 185, 129, 0.08), transparent 50%),
+      radial-gradient(600px 400px at 90% 80%, rgba(139, 92, 246, 0.06), transparent 50%);
+    pointer-events: none;
+  }
+
+  .slide-number {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  .slide-divider {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+  }
+
+  /* ─── Typography ─── */
+  .title-mega {
+    font-size: clamp(42px, 5vw, 72px);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+
+  .title-lg {
+    font-size: clamp(32px, 3.5vw, 48px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  .title-md {
+    font-size: clamp(22px, 2.5vw, 32px);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .title-sm {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .subtitle {
+    font-size: clamp(16px, 1.8vw, 22px);
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 800px;
+  }
+
+  .label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .gradient-text {
+    background: var(--gradient-1);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .gradient-text-2 {
+    background: var(--gradient-2);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .gradient-text-3 {
+    background: var(--gradient-3);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* ─── Cards ─── */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    backdrop-filter: blur(12px);
+  }
+
+  .card-glow {
+    box-shadow: 0 0 40px rgba(16, 185, 129, 0.06), 0 8px 32px rgba(0,0,0,0.3);
+  }
+
+  /* ─── Badges ─── */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+    border: 1px solid;
+  }
+
+  .badge-emerald { color: #6ee7b7; border-color: rgba(16,185,129,0.3); background: rgba(16,185,129,0.1); }
+  .badge-violet { color: #c4b5fd; border-color: rgba(139,92,246,0.3); background: rgba(139,92,246,0.1); }
+  .badge-cyan { color: #67e8f9; border-color: rgba(34,211,238,0.3); background: rgba(34,211,238,0.1); }
+  .badge-pink { color: #f9a8d4; border-color: rgba(236,72,153,0.3); background: rgba(236,72,153,0.1); }
+  .badge-amber { color: #fcd34d; border-color: rgba(245,158,11,0.3); background: rgba(245,158,11,0.1); }
+  .badge-blue { color: #93c5fd; border-color: rgba(59,130,246,0.3); background: rgba(59,130,246,0.1); }
+
+  /* ─── Grid ─── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+
+  /* ─── List ─── */
+  .feature-list { list-style: none; padding: 0; }
+  .feature-list li {
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(148,163,184,0.08);
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .feature-list li::before {
+    content: '▸';
+    color: var(--accent-emerald);
+    font-weight: bold;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .numbered-list { list-style: none; padding: 0; counter-reset: item; }
+  .numbered-list li {
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(148,163,184,0.08);
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    counter-increment: item;
+  }
+  .numbered-list li::before {
+    content: counter(item, decimal-leading-zero);
+    font-size: 24px;
+    font-weight: 800;
+    background: var(--gradient-1);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    flex-shrink: 0;
+    line-height: 1;
+    margin-top: 2px;
+  }
+
+  /* ─── Screenshot ─── */
+  .screenshot {
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    max-width: 100%;
+    height: auto;
+  }
+
+  .screenshot-container {
+    position: relative;
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .screenshot-container::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.08);
+    pointer-events: none;
+  }
+  .screenshot-container img {
+    width: 100%;
+    display: block;
+    border-radius: 12px;
+  }
+
+  /* ─── Code Block ─── */
+  .code-block {
+    background: #0d1117;
+    border: 1px solid rgba(148,163,184,0.15);
+    border-radius: 12px;
+    padding: 20px 24px;
+    font-family: 'Fira Code', monospace;
+    font-size: 13px;
+    line-height: 1.8;
+    color: #e6edf3;
+    overflow-x: auto;
+    white-space: pre;
+  }
+  .code-block .kw { color: #ff7b72; }
+  .code-block .fn { color: #d2a8ff; }
+  .code-block .str { color: #a5d6ff; }
+  .code-block .cm { color: #8b949e; }
+  .code-block .num { color: #79c0ff; }
+  .code-block .op { color: #ff7b72; }
+
+  /* ─── Architecture Diagram ─── */
+  .arch-box {
+    border-radius: 12px;
+    padding: 20px 24px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 14px;
+    border: 1px solid;
+  }
+
+  .arch-arrow {
+    text-align: center;
+    font-size: 24px;
+    color: var(--text-muted);
+    padding: 8px 0;
+  }
+
+  /* ─── Table ─── */
+  .data-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 14px;
+  }
+  .data-table th {
+    background: rgba(15, 23, 42, 0.8);
+    padding: 14px 20px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .data-table td {
+    padding: 14px 20px;
+    border-bottom: 1px solid rgba(148,163,184,0.06);
+    color: var(--text-secondary);
+  }
+  .data-table tr:hover td {
+    background: rgba(16, 185, 129, 0.03);
+  }
+
+  /* ─── Progress Bar ─── */
+  .progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: var(--gradient-1);
+    z-index: 1000;
+    transition: width 0.3s ease;
+  }
+
+  /* ─── Navigation ─── */
+  .nav {
+    position: fixed;
+    bottom: 30px;
+    right: 40px;
+    display: flex;
+    gap: 8px;
+    z-index: 100;
+  }
+  .nav a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(16px);
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 16px;
+    transition: all 0.2s;
+  }
+  .nav a:hover {
+    background: rgba(16, 185, 129, 0.1);
+    border-color: rgba(16, 185, 129, 0.3);
+    color: var(--accent-emerald);
+  }
+
+  /* ─── TOC ─── */
+  .toc-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--text-secondary);
+    transition: all 0.2s;
+    border: 1px solid transparent;
+  }
+  .toc-item:hover {
+    background: rgba(16, 185, 129, 0.05);
+    border-color: rgba(16, 185, 129, 0.15);
+    color: var(--text-primary);
+  }
+  .toc-num {
+    font-size: 28px;
+    font-weight: 800;
+    background: var(--gradient-1);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    width: 48px;
+    flex-shrink: 0;
+  }
+  .toc-label {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  /* ─── Spacing ─── */
+  .mt-1 { margin-top: 8px; }
+  .mt-2 { margin-top: 16px; }
+  .mt-3 { margin-top: 24px; }
+  .mt-4 { margin-top: 32px; }
+  .mt-5 { margin-top: 48px; }
+  .mb-3 { margin-bottom: 24px; }
+  .mb-4 { margin-bottom: 32px; }
+  .gap-3 { gap: 24px; }
+  .gap-4 { gap: 32px; }
+
+  .flex { display: flex; }
+  .flex-col { flex-direction: column; }
+  .items-center { align-items: center; }
+  .justify-between { justify-content: space-between; }
+  .flex-wrap { flex-wrap: wrap; }
+  .text-center { text-align: center; }
+  .mx-auto { margin-left: auto; margin-right: auto; }
+  .max-w-900 { max-width: 900px; }
+
+  /* ─── Animations ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate { animation: fadeUp 0.6s ease-out both; }
+
+  /* ─── Title slide special ─── */
+  .slide-title {
+    background:
+      radial-gradient(1000px 600px at 20% 30%, rgba(16, 185, 129, 0.12), transparent 50%),
+      radial-gradient(800px 500px at 80% 70%, rgba(139, 92, 246, 0.1), transparent 50%),
+      radial-gradient(600px 400px at 50% 50%, rgba(34, 211, 238, 0.06), transparent 50%),
+      var(--bg-dark);
+  }
+
+  .slide-title::before { display: none; }
+
+  .glow-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+  }
+
+  @media print {
+    .slide { page-break-after: always; min-height: auto; padding: 40px; }
+    .nav, .progress-bar { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- ═══════════════════════ SLIDE 1: TITLE ═══════════════════════ -->
+<div class="slide slide-title" id="slide-0">
+  <div class="glow-orb" style="width:400px;height:400px;background:rgba(16,185,129,0.15);top:-100px;left:-100px;"></div>
+  <div class="glow-orb" style="width:300px;height:300px;background:rgba(139,92,246,0.12);bottom:-50px;right:-50px;"></div>
+  <div class="glow-orb" style="width:250px;height:250px;background:rgba(34,211,238,0.08);top:40%;left:60%;"></div>
+
+  <div style="position:relative;z-index:1;">
+    <div class="flex gap-3 mb-3" style="gap:10px;">
+      <span class="badge badge-emerald">React</span>
+      <span class="badge badge-violet">FastAPI</span>
+      <span class="badge badge-cyan">D3.js</span>
+      <span class="badge badge-pink">Groq AI</span>
+    </div>
+
+    <h1 class="title-mega">
+      <span class="gradient-text">AlgoVision</span>
+    </h1>
+    <p class="title-md mt-2" style="color:var(--text-secondary);font-weight:500;">
+      Interactive Algorithm Analyzer, Visualizer &amp; AI Advisor
+    </p>
+
+    <p class="subtitle mt-4" style="max-width:700px;">
+      A full-stack web platform that brings algorithms to life through real-time visualization, AI-powered analysis, and interactive code execution.
+    </p>
+
+    <div class="mt-5 flex gap-3" style="gap:12px;">
+      <span class="badge badge-emerald">Sorting</span>
+      <span class="badge badge-amber">Graph Traversal</span>
+      <span class="badge badge-blue">Dynamic Programming</span>
+      <span class="badge badge-pink">String Matching</span>
+      <span class="badge badge-violet">Tree Algorithms</span>
+    </div>
+
+    <div class="mt-5" style="color:var(--text-muted);font-size:14px;">
+      Built with React · Tailwind CSS · Framer Motion · FastAPI · D3.js · Groq LLM (Llama 3.3 70B)
+    </div>
+
+    <div class="mt-5" style="color:var(--text-muted);font-size:12px;letter-spacing:0.05em;line-height:1.8;">
+      Salahuddin — 1602-24-733-152 &nbsp;·&nbsp; Bhuvan — 1602-24-733-139 &nbsp;·&nbsp; Ismail — 1602-24-733-148
+    </div>
+  </div>
+  <div class="slide-number">Slide 1 / 12</div>
+</div>
+
+<div class="slide-divider"></div>
+
+<!-- ═══════════════════════ SLIDE 2: TABLE OF CONTENTS ═══════════════════════ -->
+<div class="slide" id="slide-1">
+  <p class="label mb-3">Overview</p>
+  <h2 class="title-lg mb-4">Table of Contents</h2>
+
+  <div class="grid-2 mt-3">
+    <div class="flex flex-col" style="gap:4px;">
+      <a href="#slide-2" class="toc-item"><span class="toc-num">01</span><span class="toc-label">Abstract / Problem Statement</span></a>
+      <a href="#slide-3" class="toc-item"><span class="toc-num">02</span><span class="toc-label">Related Work</span></a>
+      <a href="#slide-4" class="toc-item"><span class="toc-num">03</span><span class="toc-label">Proposed Algorithm &amp; Architecture</span></a>
+      <a href="#slide-5" class="toc-item"><span class="toc-num">04</span><span class="toc-label">Key Features</span></a>
+    </div>
+    <div class="flex flex-col" style="gap:4px;">
+      <a href="#slide-6" class="toc-item"><span class="toc-num">05</span><span class="toc-label">Implementation / Code</span></a>
+      <a href="#slide-8" class="toc-item"><span class="toc-num">06</span><span class="toc-label">Results &amp; Demo</span></a>
+      <a href="#slide-10" class="toc-item"><span class="toc-num">07</span><span class="toc-label">Conclusion</span></a>
+      <a href="#slide-11" class="toc-item"><span class="toc-num">08</span><span class="toc-label">References</span></a>
+    </div>
+  </div>
+  <div class="slide-number">Slide 2 / 12</div>
+</div>
+
+<div class="slide-divider"></div>
+
+<!-- ═══════════════════════ SLIDE 3: ABSTRACT ═══════════════════════ -->
+<div class="slide" id="slide-2">
+  <p class="label mb-3">Section 01</p>
+  <h2 class="title-lg">Abstract / <span class="gradient-text">Problem Statement</span></h2>
+
+  <div class="grid-2 mt-4 gap-4" style="gap:40px;">
+    <div>
+      <div class="card card-glow">
+        <h3 class="title-sm" style="color:#6ee7b7;">The Problem</h3>
+        <p class="mt-2" style="color:var(--text-secondary);line-height:1.8;font-size:15px;">
+          Understanding algorithms is one of the biggest hurdles for computer science students and developers. Traditional textbook learning offers static diagrams and pseudocode that fail to convey how algorithms behave dynamically. Students struggle to grasp time-complexity trade-offs, data structure transformations, and step-by-step execution flow without visual and interactive aids.
+        </p>
+      </div>
+
+      <div class="card card-glow mt-3">
+        <h3 class="title-sm" style="color:#c4b5fd;">Our Solution</h3>
+        <p class="mt-2" style="color:var(--text-secondary);line-height:1.8;font-size:15px;">
+          <strong>AlgoVision</strong> is an interactive, AI-powered web platform that transforms algorithm learning through real-time visualizations, step-by-step animations, AI advisory, and a code playground — enabling students to <em>see</em> algorithms execute, not just read about them.
+        </p>
+      </div>
+    </div>
+
+    <div>
+      <div class="card" style="border-color:rgba(34,211,238,0.2);">
+        <h3 class="title-sm mb-3" style="color:#67e8f9;">Key Objectives</h3>
+        <ul class="feature-list">
+          <li>Provide animated, step-by-step visualizations for sorting, graph, DP, string matching, and tree algorithms</li>
+          <li>Enable users to paste any C algorithm and automatically detect and visualize it using AI</li>
+          <li>Integrate an AI advisor powered by Groq LLM for explaining, suggesting, and analyzing algorithms</li>
+          <li>Offer a code playground for executing algorithms (Python &amp; C) with real-time output</li>
+          <li>Provide algorithm comparison and benchmarking tools for performance analysis</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="slide-number">Slide 3 / 12</div>
+</div>
+
+<div class="slide-divider"></div>
+
+<!-- ═══════════════════════ SLIDE 4: RELATED WORK ═══════════════════════ -->
+<div class="slide" id="slide-3">
+  <p class="label mb-3">Section 02</p>
+  <h2 class="title-lg">Related <span class="gradient-text-2">Work</span></h2>
+
+  <div class="mt-4">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th style="width:22%;">Platform</th>
+          <th style="width:35%;">Features</th>
+          <th style="width:22%;">Limitations</th>
+          <th style="width:21%;">AlgoVision Advantage</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>VisuAlgo</strong></td>
+          <td>Web-based algorithm animations for sorting, graph, and data structures</td>
+          <td>No AI integration, no custom code input, fixed examples only</td>
+          <td style="color:#6ee7b7;">AI-powered analysis + custom code paste</td>
+        </tr>
+        <tr>
+          <td><strong>Algorithm Visualizer</strong></td>
+          <td>Open-source visualization with JavaScript code execution</td>
+          <td>No AI advisor, limited algorithm categories, no comparison tools</td>
+          <td style="color:#6ee7b7;">Groq LLM advisor + benchmarking + comparison</td>
+        </tr>
+        <tr>
+          <td><strong>Sorting.at</strong></td>
+          <td>Clean sorting algorithm animations</td>
+          <td>Only sorting algorithms, no graphs/DP/trees/strings</td>
+          <td style="color:#6ee7b7;">Full spectrum: sorting, graph, DP, string, tree</td>
+        </tr>
+        <tr>
+          <td><strong>CS Academy</strong></td>
+          <td>Graph editor with basic visualization</td>
+          <td>Graph-only, no educational content, no AI</td>
+          <td style="color:#6ee7b7;">Multi-category + AI explanation + theory</td>
+        </tr>
+        <tr>
+          <td><strong>LeetCode</strong></td>
+          <td>Code execution with test cases</td>
+          <td>No visualization at all, contest-focused</td>
+          <td style="color:#6ee7b7;">Visual-first learning + step animations</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card mt-4" style="border-color:rgba(139,92,246,0.2);max-width:800px;">
+    <p style="color:var(--text-secondary);font-size:15px;line-height:1.7;">
+      <strong style="color:#c4b5fd;">Gap Identified:</strong> Existing tools either provide static visualizations without AI intelligence, or offer code execution without visual feedback. No platform combines <em>AI-powered algorithm detection from arbitrary code</em> with <em>real-time step-by-step visualization</em> across all major algorithm categories.
+    </p>
+  </div>
+  <div class="slide-number">Slide 4 / 12</div>
+</div>
+
+<div class="slide-divider"></div>
+
+<!-- ═══════════════════════ SLIDE 5: PROPOSED ALGORITHM ═══════════════════════ -->
+<div class="slide" id="slide-4">
+  <p class="label mb-3">Section 03</p>
+  <h2 class="title-lg">Proposed Algorithm &amp; <span class="gradient-text-3">Architecture</span></h2>
+
+  <div class="grid-2 mt-4" style="gap:40px;">
+    <div>
+      <h3 class="title-sm mb-3" style="color:var(--text-primary);">System Architecture</h3>
+
+      <div class="arch-box badge-cyan" style="font-size:16px;">
+        🖥️ Frontend — React + Tailwind + D3.js + Framer Motion
+      </div>
+      <div class="arch-arrow">↕ REST API (Axios → FastAPI)</div>
+      <div class="arch-box badge-violet" style="font-size:16px;">
+        ⚙️ Backend — Python FastAPI (Uvicorn)
+      </div>
+      <div class="arch-arrow">↕ API Calls</div>
+      <div class="arch-box badge-pink" style="font-size:16px;">
+        🧠 AI Engine — Groq Cloud (Llama 3.3 70B Versatile)
+      </div>
+
+      <div class="card mt-4">
+        <h4 class="title-sm" style="color:#67e8f9;">AI Visualization Pipeline</h4>
+        <ol class="numbered-list mt-2">
+          <li>User pastes any algorithm code (C language)</li>
+          <li>Backend sends code to Groq LLM with structured prompt</li>
+          <li>AI detects algorithm type (sorting/graph/DP/string/tree)</li>
+          <li>AI generates step-by-step visualization data in JSON</li>
+          <li>Frontend renders animated visualization using D3.js</li>
+        </ol>
+      </div>
+    </div>
+
+    <div>
+      <h3 class="title-sm mb-3" style="color:var(--text-primary);">Technology Stack</h3>
+      <div class="grid-2" style="gap:12px;">
+        <div class="card">
+          <p class="label" style="color:#6ee7b7;">Frontend</p>
+          <ul class="feature-list mt-2">
+            <li>React 18 (SPA)</li>
+            <li>Tailwind CSS</li>
+            <li>Framer Motion</li>
+            <li>D3.js (Visualizations)</li>
+            <li>Lucide React Icons</li>
+            <li>Axios (HTTP Client)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <p class="label" style="color:#c4b5fd;">Backend</p>
+          <ul class="feature-list mt-2">
+            <li>Python 3 + FastAPI</li>
+            <li>Uvicorn (ASGI)</li>
+            <li>Groq SDK (LLM)</li>
+            <li>Pydantic (Schemas)</li>
+            <li>Subprocess (Sandbox)</li>
+            <li>Pytest (Testing)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card mt-3" style="border-color:rgba(245,158,11,0.2);">
+        <p class="label" style="color:#fcd34d;">AI Model</p>
+        <p class="mt-1" style="color:var(--text-secondary);font-size:14px;line-height:1.7;">
+          <strong>Llama 3.3 70B Versatile</strong> via Groq Cloud API — chosen for its superior code understanding, JSON output reliability, and sub-second inference speed through Groq's LPU hardware.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="slide-number">Slide 5 / 12</div>
+</div>
+
+<div class="slide-divider"></div>
+
+<!-- ═══════════════════════ SLIDE 6: KEY FEATURES ═══════════════════════ -->
+<div class="slide" id="slide-5">
+  <p class="label mb-3">Section 04</p>
+  <h2 class="title-lg">Key <span class="gradient-text">Features</span></h2>
+
+  <div class="grid-3 mt-4" style="gap:20px;">
+    <div class="card card-glow">
+      <div style="font-size:32px;margin-bottom:12px;">📊</div>
+      <h3 class="title-sm" style="color:#6ee7b7;">Algorithm Analyzer</h3>
+      <p class="mt-2" style="color:var(--text-secondary);font-size:14px;line-height:1.7;">
+        Select from a catalog of 15+ algorithms across sorting, graph, DP, and string categories. Run them with custom inputs and watch step-by-step animated visualizations with playback controls.
+      </p>
+    </div>
+
+    <div class="card card-glow">
+      <div style="font-size:32px;margin-bottom:12px;">👁️</div>
+      <h3 class="title-sm" style="color:#67e8f9;">AI Algorithm Visualizer</h3>
+      <p class="mt-2" style="color:var(--text-secondary);font-size:14px;line-height:1.7;">
+        Paste ANY algorithm code — the AI automatically detects the type (sorting, graph, DP, string, tree) and generates step-by-step visualization data. No manual configuration needed.
+      </p>
+    </div>
+
+    <div class="card card-glow">
+      <div style="font-size:32px;margin-bottom:12px;">🤖</div>
+      <h3 class="title-sm" style="color:#c4b5fd;">AI Advisor</h3>
+      <p class="mt-2" style="color:var(--text-secondary);font-size:14px;line-height:1.7;">
+        AI-powered assistant that can explain algorithms in simple terms, suggest the best algorithm for a given problem, and analyze code complexity — powered by Llama 3.3 70B.
+      </p>
+    </div>
+
+    <div class="card card-glow">
+      <div style="font-size:32px;margin-bottom:12px;">⚡</div>
+      <h3 class="title-sm" style="color:#fcd34d;">Playground</h3>
+      <p class="mt-2" style="color:var(--text-secondary);font-size:14px;line-height:1.7;">
+        Write and execute Python or C code directly in the browser. Sandboxed execution with output display, error handling, and execution time measurement.
+      </p>
+    </div>
+
+    <div class="card card-glow">
+      <div style="font-size:32px;margin-bottom:12px;">📏</div>
+      <h3 class="title-sm" style="color:#f9a8d4;">Benchmarking</h3>
+      <p class="mt-2" style="color:var(--text-secondary);font-size:14px;line-height:1.7;">
+        Compare algorithm performance with variable input sizes. Generates execution time charts, operation counts, and complexity analysis for side-by-side comparison.
+      </p>
+    </div>
+
+    <div class="card card-glow">
+      <div style="font-size:32px;margin-bottom:12px;">📖</div>
+      <h3 class="title-sm" style="color:#93c5fd;">Theory &amp; Reports</h3>
+      <p class="mt-2" style="color:var(--text-secondary);font-size:14px;line-height:1.7;">
+        Comprehensive theory pages with complexity tables, code examples in Python/JS/C++/Java, and downloadable analysis reports for each algorithm run.
+      </p>
+    </div>
+  </div>
+  <div class="slide-number">Slide 6 / 12</div>
+</div>
+
+<div class="slide-divider"></div>
+
+<!-- ═══════════════════════ SLIDE 7: IMPLEMENTATION 1 ═══════════════════════ -->
+<div class="slide" id="slide-6">
+  <p class="label mb-3">Section 05</p>
+  <h2 class="title-lg">Implementation — <span class="gradient-text-2">Backend</span></h2>
+
+  <div class="grid-2 mt-4" style="gap:40px;">
+    <div>
+      <h3 class="title-sm mb-3">FastAPI Backend Structure</h3>
+      <div class="code-block"><span class="cm">server/</span>
+├── main.py               <span class="cm"># FastAPI app + CORS + routers</span>
+├── requirements.txt      <span class="cm"># Dependencies</span>
+└── app/
+    ├── routes/
+    │   ├── ai.py          <span class="cm"># AI Advisor endpoints</span>
+    │   ├── algo_visualize.py <span class="cm"># AI Visualizer endpoint</span>
+    │   ├── algorithms.py  <span class="cm"># Algorithm catalog</span>
+    │   ├── benchmark.py   <span class="cm"># Benchmarking</span>
+    │   ├── codeviz.py     <span class="cm"># Code visualization</span>
+    │   ├── compare.py     <span class="cm"># Comparison</span>
+    │   ├── playground.py  <span class="cm"># Code execution</span>
+    │   ├── run.py         <span class="cm"># Algorithm runner</span>
+    │   └── theory.py      <span class="cm"># Theory content</span>
+    ├── services/
+    │   └── ai_advisor.py  <span class="cm"># Groq LLM integration</span>
+    └── schemas/
+        └── __init__.py    <span class="cm"># Pydantic models</span></div>
+    </div>
+
+    <div>
+      <h3 class="title-sm mb-3">AI Visualization Endpoint</h3>
+      <div class="code-block"><span class="kw">@router.post</span>(<span class="str">"/algo-visualize"</span>)
+<span class="kw">def</span> <span class="fn">algo_visualize_endpoint</span>(payload):
+    code = payload.code.strip()
+
+    <span class="cm"># Connect to Groq LLM</span>
+    client = <span class="fn">_get_client</span>()
+
+    <span class="cm"># Send code to AI with structured prompt</span>
+    completion = client.chat.completions.<span class="fn">create</span>(
+        model=<span class="str">"llama-3.3-70b-versatile"</span>,
+        messages=[
+            {<span class="str">"role"</span>: <span class="str">"system"</span>,
+             <span class="str">"content"</span>: VISUALIZE_PROMPT},
+            {<span class="str">"role"</span>: <span class="str">"user"</span>,
+             <span class="str">"content"</span>: user_message},
+        ],
+        temperature=<span class="num">0.2</span>,
+    )
+
+    <span class="cm"># Parse AI response → JSON</span>
+    parsed = <span class="fn">_extract_json</span>(raw)
+
+    <span class="cm"># Normalize tree/generic → graph</span>
+    <span class="kw">if</span> parsed[<span class="str">"visualization_type"</span>] \
+        <span class="kw">in</span> (<span class="str">"tree"</span>, <span class="str">"generic"</span>):
+        parsed[<span class="str">"visualization_type"</span>] = <span class="str">"graph"</span>
+
+    <span class="kw">return</span> AlgoVisualizeResponse(**parsed)</div>
+    </div>
+  </div>
+  <div class="slide-number">Slide 7 / 12</div>
+</div>
+
+<div class="slide-divider"></div>
+
+<!-- ═══════════════════════ SLIDE 8: IMPLEMENTATION 2 ═══════════════════════ -->
+<div class="slide" id="slide-7">
+  <p class="label mb-3">Section 05 (continued)</p>
+  <h2 class="title-lg">Implementation — <span class="gradient-text">Frontend</span></h2>
+
+  <div class="grid-2 mt-4" style="gap:40px;">
+    <div>
+      <h3 class="title-sm mb-3">React Frontend Structure</h3>
+      <div class="code-block"><span class="cm">client/src/</span>
+├── App.jsx               <span class="cm"># Routing + layout</span>
+├── index.css             <span class="cm"># Global styles + glassmorphism</span>
+├── pages/
+│   ├── Home.jsx          <span class="cm"># Landing page</span>
+│   ├── Analyzer.jsx      <span class="cm"># Algorithm analyzer</span>
+│   ├── AlgoVisualizer.jsx <span class="cm"># AI visualizer ✨</span>
+│   ├── AIAdvisor.jsx     <span class="cm"># AI chat advisor</span>
+│   ├── Playground.jsx    <span class="cm"># Code execution</span>
+│   ├── Benchmark.jsx     <span class="cm"># Performance benchmarks</span>
+│   └── Theory.jsx        <span class="cm"># Algorithm theory</span>
+├── components/
+│   ├── VisualizationCanvas.jsx <span class="cm"># D3.js visualizations</span>
+│   ├── Navbar.jsx        <span class="cm"># Top navigation</span>
+│   └── Sidebar.jsx       <span class="cm"># Side menu</span>
+├── services/
+│   └── api.js            <span class="cm"># Axios API client</span>
+└── data/
+    └── algorithms.js     <span class="cm"># Algorithm catalog</span></div>
+    </div>
+
+    <div>
+      <h3 class="title-sm mb-3">Visualization Components (D3.js)</h3>
+      <div class="grid-2" style="gap:12px;">
+        <div class="card" style="border-color:rgba(16,185,129,0.25);">
+          <p style="font-size:20px;">📊</p>
+          <p class="title-sm mt-1" style="color:#6ee7b7;">SortingViz</p>
+          <p class="mt-1" style="color:var(--text-muted);font-size:13px;">Animated bar charts with color-coded comparisons, swaps, and pivot highlighting</p>
+        </div>
+        <div class="card" style="border-color:rgba(245,158,11,0.25);">
+          <p style="font-size:20px;">🌐</p>
+          <p class="title-sm mt-1" style="color:#fcd34d;">GraphViz</p>
+          <p class="mt-1" style="color:var(--text-muted);font-size:13px;">D3 force-directed graph with node/edge highlighting, BFS/DFS animation</p>
+        </div>
+        <div class="card" style="border-color:rgba(59,130,246,0.25);">
+          <p style="font-size:20px;">📐</p>
+          <p class="title-sm mt-1" style="color:#93c5fd;">DpViz</p>
+          <p class="mt-1" style="color:var(--text-muted);font-size:13px;">Interactive DP tables for LCS, Knapsack, Matrix Chain with cell-by-cell fill</p>
+        </div>
+        <div class="card" style="border-color:rgba(236,72,153,0.25);">
+          <p style="font-size:20px;">🔤</p>
+          <p class="title-sm mt-1" style="color:#f9a8d4;">StringViz</p>
+          <p class="mt-1" style="color:var(--text-muted);font-size:13px;">Character-by-character matching with sliding window, match/mismatch indicators</p>
+        </div>
+      </div>
+
+      <div class="card mt-3" style="border-color:rgba(34,211,238,0.2);">
+        <p class="label" style="color:#67e8f9;">UI Design System</p>
+        <ul class="feature-list mt-2">
+          <li>Dark glassmorphism theme (backdrop-blur, translucent panels)</li>
+          <li>Gradient accents with animated text effects</li>
+          <li>Framer Motion page transitions and micro-animations</li>
+          <li>Custom scrollbars, selection colors, shimmer hovers</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="slide-number">Slide 8 / 12</div>
+</div>
+
+<div class="slide-divider"></div>
+
+<!-- ═══════════════════════ SLIDE 9: RESULTS 1 ═══════════════════════ -->
+<div class="slide" id="slide-8">
+  <p class="label mb-3">Section 06</p>
+  <h2 class="title-lg">Results — <span class="gradient-text">Application Demo</span></h2>
+
+  <div class="grid-2 mt-4" style="gap:24px;">
+    <div>
+      <p class="label mb-2" style="color:#6ee7b7;">Home Page</p>
+      <div class="screenshot-container">
+        <img src="home_page_1773792452567.png" alt="Home Page" class="screenshot">
+      </div>
+    </div>
+    <div>
+      <p class="label mb-2" style="color:#c4b5fd;">Algorithm Analyzer</p>
+      <div class="screenshot-container">
+        <img src="analyzer_page_1773792496944.png" alt="Analyzer Page" class="screenshot">
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2 mt-3" style="gap:24px;">
+    <div>
+      <p class="label mb-2" style="color:#67e8f9;">AI Advisor</p>
+      <div class="screenshot-container">
+        <img src="ai_advisor_page_1773792482673.png" alt="AI Advisor" class="screenshot">
+      </div>
+    </div>
+    <div>
+      <p class="label mb-2" style="color:#f9a8d4;">Code Playground</p>
+      <div class="screenshot-container">
+        <img src="playground_page_1773792512185.png" alt="Playground" class="screenshot">
+      </div>
+    </div>
+  </div>
+  <div class="slide-number">Slide 9 / 12</div>
+</div>
+
+<div class="slide-divider"></div>
+
+<!-- ═══════════════════════ SLIDE 10: RESULTS 2 ═══════════════════════ -->
+<div class="slide" id="slide-9">
+  <p class="label mb-3">Section 06 (continued)</p>
+  <h2 class="title-lg">Results — <span class="gradient-text-2">AI Visualizer in Action</span></h2>
+
+  <div class="grid-2 mt-4" style="gap:40px;">
+    <div>
+      <p class="label mb-2" style="color:#67e8f9;">AI Algorithm Visualizer — Bubble Sort (C)</p>
+      <div class="screenshot-container">
+        <img src="algo_visualizer_result_1773791800173.png" alt="Visualizer Result" class="screenshot">
+      </div>
+    </div>
+    <div>
+      <p class="label mb-2" style="color:#c4b5fd;">AI Algorithm Visualizer — Binary Tree Traversal (C)</p>
+      <div class="screenshot-container">
+        <img src="tree_visualization_result_1773792278478.png" alt="Tree Visualization" class="screenshot">
+      </div>
+    </div>
+  </div>
+
+  <div class="card mt-4" style="border-color:rgba(16,185,129,0.2);max-width:900px;">
+    <h3 class="title-sm" style="color:#6ee7b7;">Key Results</h3>
+    <div class="grid-4 mt-3" style="text-align:center;">
+      <div>
+        <p style="font-size:36px;font-weight:900;color:#6ee7b7;">5</p>
+        <p style="color:var(--text-muted);font-size:12px;text-transform:uppercase;letter-spacing:0.1em;">Algo Categories</p>
+      </div>
+      <div>
+        <p style="font-size:36px;font-weight:900;color:#c4b5fd;">15+</p>
+        <p style="color:var(--text-muted);font-size:12px;text-transform:uppercase;letter-spacing:0.1em;">Algorithms</p>
+      </div>
+      <div>
+        <p style="font-size:36px;font-weight:900;color:#67e8f9;">&lt;3s</p>
+        <p style="color:var(--text-muted);font-size:12px;text-transform:uppercase;letter-spacing:0.1em;">AI Response</p>
+      </div>
+      <div>
+        <p style="font-size:36px;font-weight:900;color:#fcd34d;">100%</p>
+        <p style="color:var(--text-muted);font-size:12px;text-transform:uppercase;letter-spacing:0.1em;">Detection Rate</p>
+      </div>
+    </div>
+  </div>
+  <div class="slide-number">Slide 10 / 12</div>
+</div>
+
+<div class="slide-divider"></div>
+
+<!-- ═══════════════════════ SLIDE 11: CONCLUSION ═══════════════════════ -->
+<div class="slide" id="slide-10">
+  <p class="label mb-3">Section 07</p>
+  <h2 class="title-lg"><span class="gradient-text">Conclusion</span></h2>
+
+  <div class="grid-2 mt-4" style="gap:40px;">
+    <div>
+      <div class="card card-glow">
+        <h3 class="title-sm" style="color:#6ee7b7;">What We Achieved</h3>
+        <ul class="feature-list mt-2">
+          <li>Built a full-stack algorithm visualization platform with React, FastAPI, D3.js, and Groq AI</li>
+          <li>Implemented AI-powered algorithm detection that automatically identifies and visualizes any pasted C code</li>
+          <li>Created 4 specialized visualization components (Sorting, Graph, DP, String) with smooth step-by-step animations</li>
+          <li>Integrated Llama 3.3 70B for intelligent algorithm explanation, suggestion, and complexity analysis</li>
+          <li>Built a sandboxed code playground supporting Python and C execution</li>
+          <li>Achieved sub-3-second AI response times using Groq's LPU-accelerated inference</li>
+        </ul>
+      </div>
+    </div>
+
+    <div>
+      <div class="card" style="border-color:rgba(139,92,246,0.2);">
+        <h3 class="title-sm" style="color:#c4b5fd;">Future Scope</h3>
+        <ul class="feature-list mt-2">
+          <li>Add more algorithm categories: backtracking, greedy, divide-and-conquer</li>
+          <li>Support additional languages: Java, C++, Rust, Go</li>
+          <li>Implement collaborative mode for classroom/group learning</li>
+          <li>Add step-by-step code highlighting synced with visualization</li>
+          <li>Mobile-responsive design for tablets and phones</li>
+          <li>Export visualizations as GIF/MP4 for presentations</li>
+        </ul>
+      </div>
+
+      <div class="card mt-3" style="border-color:rgba(34,211,238,0.2);">
+        <h3 class="title-sm" style="color:#67e8f9;">Impact</h3>
+        <p class="mt-2" style="color:var(--text-secondary);font-size:14px;line-height:1.8;">
+          AlgoVision bridges the gap between theoretical algorithm study and practical understanding by providing an interactive, AI-augmented learning environment. It transforms passive learning into active exploration, making algorithm education accessible, engaging, and effective.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="slide-number">Slide 11 / 12</div>
+</div>
+
+<div class="slide-divider"></div>
+
+<!-- ═══════════════════════ SLIDE 12: REFERENCES ═══════════════════════ -->
+<div class="slide" id="slide-11">
+  <p class="label mb-3">Section 08</p>
+  <h2 class="title-lg"><span class="gradient-text-3">References</span></h2>
+
+  <div class="grid-2 mt-4" style="gap:40px;">
+    <div>
+      <h3 class="title-sm mb-3" style="color:var(--text-primary);">Technologies &amp; Libraries</h3>
+      <div class="card">
+        <ol class="numbered-list">
+          <li><strong>React 18</strong> — Meta Platforms. "React: A JavaScript library for building user interfaces." <em>reactjs.org</em>, 2024.</li>
+          <li><strong>FastAPI</strong> — Ramírez, S. "FastAPI: Modern, fast web framework for building APIs with Python 3.7+." <em>fastapi.tiangolo.com</em>, 2024.</li>
+          <li><strong>D3.js</strong> — Bostock, M. "D3.js: Data-Driven Documents." <em>d3js.org</em>, 2024.</li>
+          <li><strong>Tailwind CSS</strong> — Adam Wathan et al. "A utility-first CSS framework." <em>tailwindcss.com</em>, 2024.</li>
+          <li><strong>Framer Motion</strong> — Framer. "A production-ready motion library for React." <em>framer.com/motion</em>, 2024.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div>
+      <h3 class="title-sm mb-3" style="color:var(--text-primary);">Research &amp; AI</h3>
+      <div class="card">
+        <ol class="numbered-list">
+          <li><strong>Groq</strong> — Groq Inc. "Groq Cloud: LPU Inference Engine for LLMs." <em>groq.com</em>, 2024.</li>
+          <li><strong>Llama 3.3</strong> — Meta AI. "Llama 3.3 70B Versatile: Open-source large language model." <em>ai.meta.com</em>, 2024.</li>
+          <li><strong>Cormen, T.H. et al.</strong> "Introduction to Algorithms" (CLRS), 4th Edition. MIT Press, 2022.</li>
+          <li><strong>VisuAlgo</strong> — Halim, S. "Visualising data structures and algorithms through animation." <em>visualgo.net</em>, 2024.</li>
+          <li><strong>Hundhausen, C.D. et al.</strong> "A meta-study of algorithm visualization effectiveness." <em>Journal of Visual Languages &amp; Computing</em>, 2002.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-5 text-center">
+    <h2 class="title-lg"><span class="gradient-text">Thank You!</span></h2>
+    <p class="mt-2" style="color:var(--text-secondary);font-size:18px;">
+      Questions? Let's discuss! 🚀
+    </p>
+  </div>
+  <div class="slide-number">Slide 12 / 12</div>
+</div>
+
+<!-- ─── Navigation ─── -->
+<div class="nav" id="navBar">
+  <a href="#" onclick="goSlide(-1)" title="Previous">◀</a>
+  <a href="#" onclick="goSlide(1)" title="Next">▶</a>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let current = 0;
+
+  function goSlide(dir) {
+    current = Math.max(0, Math.min(slides.length - 1, current + dir));
+    slides[current].scrollIntoView({ behavior: 'smooth' });
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    document.getElementById('progressBar').style.width = pct + '%';
+  }
+
+  window.addEventListener('scroll', updateProgress);
+  updateProgress();
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+      e.preventDefault();
+      goSlide(1);
+    }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      goSlide(-1);
+    }
+  });
+</script>
+
+</body>
+</html>

@@ -31,6 +31,7 @@ const Layout = () => {
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute -left-24 top-10 h-72 w-72 rounded-full bg-accent-sorting/20 blur-3xl" />
         <div className="absolute right-0 top-1/3 h-80 w-80 rounded-full bg-accent-dp/20 blur-3xl" />
+        <div className="absolute left-1/2 bottom-20 h-60 w-60 rounded-full bg-violet-500/10 blur-3xl" />
       </div>
       <Navbar
         isSidebarCollapsed={isSidebarCollapsed}
@@ -49,9 +50,19 @@ const Layout = () => {
             onMouseDown={startSidebarResize}
           />
         )}
-        <main className="flex-1 px-4 pb-12 pt-6 md:px-8 xl:px-10">
-          <Outlet />
-        </main>
+        <div className="flex flex-1 flex-col">
+          <main className="flex-1 px-4 pb-8 pt-6 md:px-8 xl:px-10">
+            <Outlet />
+          </main>
+          <footer className="border-t border-white/5 px-6 py-4">
+            <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-sky/30">
+              <p>
+                <span className="font-semibold text-sky/50">AlgoVision</span> — Interactive Algorithm Analyzer & Optimizer
+              </p>
+              <p>Built with React, FastAPI, D3, and Groq AI</p>
+            </div>
+          </footer>
+        </div>
       </div>
     </div>
   );

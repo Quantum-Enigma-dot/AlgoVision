@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { BarChart2, BookOpen, FileText, GitCompare, House, Layers } from "lucide-react";
+import { BarChart2, BookOpen, FileText, GitCompare, House, Layers, Bot, TrendingUp, Terminal, Eye } from "lucide-react";
 
 const Sidebar = ({ isCollapsed, onToggleSidebar }) => {
   const [modulesOpen, setModulesOpen] = useState(true);
@@ -10,6 +10,10 @@ const Sidebar = ({ isCollapsed, onToggleSidebar }) => {
     { to: "/", label: "Home", icon: House, activeTone: "bg-accent-sorting/20 text-accent-sorting shadow-glow", idleTone: "text-sky/70 hover:bg-accent-sorting/10 hover:text-accent-sorting" },
     { to: "/analyzer", label: "Analyzer", icon: BarChart2, activeTone: "bg-accent-sorting/20 text-accent-sorting shadow-glow", idleTone: "text-sky/70 hover:bg-accent-sorting/10 hover:text-accent-sorting" },
     { to: "/compare", label: "Compare", icon: GitCompare, activeTone: "bg-accent-graph/20 text-accent-graph shadow-glow", idleTone: "text-sky/70 hover:bg-accent-graph/10 hover:text-accent-graph" },
+    { to: "/ai-advisor", label: "AI Advisor", icon: Bot, activeTone: "bg-violet-400/20 text-violet-300", idleTone: "text-sky/70 hover:bg-violet-400/10 hover:text-violet-300" },
+    { to: "/benchmark", label: "Benchmark", icon: TrendingUp, activeTone: "bg-cyan-400/20 text-cyan-300", idleTone: "text-sky/70 hover:bg-cyan-400/10 hover:text-cyan-300" },
+    { to: "/playground", label: "Playground", icon: Terminal, activeTone: "bg-pink-400/20 text-pink-300", idleTone: "text-sky/70 hover:bg-pink-400/10 hover:text-pink-300" },
+    { to: "/algo-visualizer", label: "Visualizer", icon: Eye, activeTone: "bg-teal-400/20 text-teal-300 shadow-[0_0_20px_rgba(20,184,166,0.15)]", idleTone: "text-sky/70 hover:bg-teal-400/10 hover:text-teal-300" },
     { to: "/theory", label: "Theory", icon: BookOpen, activeTone: "bg-accent-dp/20 text-accent-dp shadow-glow", idleTone: "text-sky/70 hover:bg-accent-dp/10 hover:text-accent-dp" },
     { to: "/reports", label: "Reports", icon: FileText, activeTone: "bg-accent-string/20 text-accent-string shadow-glow", idleTone: "text-sky/70 hover:bg-accent-string/10 hover:text-accent-string" }
   ];
@@ -54,8 +58,8 @@ const Sidebar = ({ isCollapsed, onToggleSidebar }) => {
           >
             Modules {modulesOpen ? "-" : "+"}
           </button>
-            <div className={`overflow-hidden transition-all duration-300 ${modulesOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
-              <div className="mt-2 space-y-2">
+            <div className={`overflow-hidden transition-all duration-300 ${modulesOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
+              <div className="mt-2 space-y-1">
                 {navItems.map((item) => {
                   const Icon = item.icon;
                   return (

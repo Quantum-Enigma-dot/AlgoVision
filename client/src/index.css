@@ -16,6 +16,7 @@ body {
   background:
     radial-gradient(1200px 700px at 10% -10%, rgba(16, 185, 129, 0.16), transparent 55%),
     radial-gradient(1100px 680px at 100% 0%, rgba(37, 99, 235, 0.16), transparent 58%),
+    radial-gradient(900px 500px at 50% 100%, rgba(139, 92, 246, 0.08), transparent 60%),
     linear-gradient(165deg, #060a12 0%, #0c1322 52%, #111827 100%);
 }
 
@@ -23,6 +24,7 @@ body {
   min-height: 100vh;
 }
 
+/* Glassmorphism */
 .glass {
   background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
   border: 1px solid rgba(226, 232, 240, 0.16);
@@ -54,4 +56,63 @@ body {
 
 .text-balance {
   text-wrap: balance;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.35);
+}
+
+/* Selection */
+::selection {
+  background: rgba(16, 185, 129, 0.3);
+  color: #e6f1ff;
+}
+
+/* Animated gradient text helper */
+.gradient-text-animated {
+  background: linear-gradient(90deg, #10b981, #22d3ee, #8b5cf6, #10b981);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-shift 4s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Card hover shimmer */
+.shimmer-hover {
+  position: relative;
+  overflow: hidden;
+}
+.shimmer-hover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.05) 45%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.05) 55%, transparent 60%);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+.shimmer-hover:hover::after {
+  transform: translateX(100%);
 }

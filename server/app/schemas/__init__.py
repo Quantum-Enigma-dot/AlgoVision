@@ -5,6 +5,15 @@ from .models import (
     RunRequest,
     RunResponse,
     TheoryResponse,
+    AIExplainRequest,
+    AISuggestRequest,
+    AIAnalyzeRequest,
+    AIResponse,
+    BenchmarkRequest,
+    BenchmarkDataPoint,
+    BenchmarkResponse,
+    PlaygroundRequest,
+    PlaygroundResponse,
 )
 
 __all__ = [
@@ -14,4 +23,13 @@ __all__ = [
     "RunRequest",
     "RunResponse",
     "TheoryResponse",
+    "AIExplainRequest",
+    "AISuggestRequest",
+    "AIAnalyzeRequest",
+    "AIResponse",
+    "BenchmarkRequest",
+    "BenchmarkDataPoint",
+    "BenchmarkResponse",
+    "PlaygroundRequest",
+    "PlaygroundResponse",
 ]
