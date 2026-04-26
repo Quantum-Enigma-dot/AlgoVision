@@ -53,6 +53,20 @@ def _generate_dp_input(algorithm: str, size: int) -> dict:
             "text_a": "".join(random.choices(chars, k=min(size, 200))),
             "text_b": "".join(random.choices(chars, k=min(size, 200))),
         }
+    if algorithm == "edit_distance":
+        chars = "abcdefghijklmnopqrstuvwxyz"
+        length = min(size, 180)
+        return {
+            "text_a": "".join(random.choices(chars, k=length)),
+            "text_b": "".join(random.choices(chars, k=length)),
+        }
+    if algorithm == "longest_common_substring":
+        chars = "abcdefghijklmnopqrstuvwxyz"
+        length = min(size, 180)
+        return {
+            "text_a": "".join(random.choices(chars, k=length)),
+            "text_b": "".join(random.choices(chars, k=length)),
+        }
     if algorithm == "matrix_chain_multiplication":
         n = min(size, 30)
         return {"dimensions": [random.randint(5, 50) for _ in range(n + 1)]}

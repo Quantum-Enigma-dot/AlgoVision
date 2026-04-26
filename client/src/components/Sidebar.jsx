@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { BarChart2, BookOpen, FileText, GitCompare, House, Layers, Bot, TrendingUp, Terminal, Eye } from "lucide-react";
+import { BarChart2, BookOpen, FileText, GitCompare, House, Layers, Bot, TrendingUp, Terminal, FlaskConical, Code2 } from "lucide-react";
 
 const Sidebar = ({ isCollapsed, onToggleSidebar }) => {
   const [modulesOpen, setModulesOpen] = useState(true);
@@ -9,11 +9,12 @@ const Sidebar = ({ isCollapsed, onToggleSidebar }) => {
   const navItems = [
     { to: "/", label: "Home", icon: House, activeTone: "bg-accent-sorting/20 text-accent-sorting shadow-glow", idleTone: "text-sky/70 hover:bg-accent-sorting/10 hover:text-accent-sorting" },
     { to: "/analyzer", label: "Analyzer", icon: BarChart2, activeTone: "bg-accent-sorting/20 text-accent-sorting shadow-glow", idleTone: "text-sky/70 hover:bg-accent-sorting/10 hover:text-accent-sorting" },
+    { to: "/practice", label: "Practice", icon: FlaskConical, activeTone: "bg-emerald-400/20 text-emerald-200 shadow-[0_0_18px_rgba(16,185,129,0.2)]", idleTone: "text-sky/70 hover:bg-emerald-400/10 hover:text-emerald-200" },
     { to: "/compare", label: "Compare", icon: GitCompare, activeTone: "bg-accent-graph/20 text-accent-graph shadow-glow", idleTone: "text-sky/70 hover:bg-accent-graph/10 hover:text-accent-graph" },
     { to: "/ai-advisor", label: "AI Advisor", icon: Bot, activeTone: "bg-violet-400/20 text-violet-300", idleTone: "text-sky/70 hover:bg-violet-400/10 hover:text-violet-300" },
+    { to: "/complexity-forensics", label: "Complexity Forensics", icon: Code2, activeTone: "bg-amber-400/20 text-amber-200 shadow-[0_0_20px_rgba(245,158,11,0.2)]", idleTone: "text-sky/70 hover:bg-amber-400/10 hover:text-amber-200" },
     { to: "/benchmark", label: "Benchmark", icon: TrendingUp, activeTone: "bg-cyan-400/20 text-cyan-300", idleTone: "text-sky/70 hover:bg-cyan-400/10 hover:text-cyan-300" },
     { to: "/playground", label: "Playground", icon: Terminal, activeTone: "bg-pink-400/20 text-pink-300", idleTone: "text-sky/70 hover:bg-pink-400/10 hover:text-pink-300" },
-    { to: "/algo-visualizer", label: "Visualizer", icon: Eye, activeTone: "bg-teal-400/20 text-teal-300 shadow-[0_0_20px_rgba(20,184,166,0.15)]", idleTone: "text-sky/70 hover:bg-teal-400/10 hover:text-teal-300" },
     { to: "/theory", label: "Theory", icon: BookOpen, activeTone: "bg-accent-dp/20 text-accent-dp shadow-glow", idleTone: "text-sky/70 hover:bg-accent-dp/10 hover:text-accent-dp" },
     { to: "/reports", label: "Reports", icon: FileText, activeTone: "bg-accent-string/20 text-accent-string shadow-glow", idleTone: "text-sky/70 hover:bg-accent-string/10 hover:text-accent-string" }
   ];
@@ -88,6 +89,10 @@ const Sidebar = ({ isCollapsed, onToggleSidebar }) => {
                 <p className="rounded-lg bg-accent-graph/20 px-3 py-2 text-accent-graph font-semibold shadow-glow">Graph</p>
                 <p className="rounded-lg bg-accent-dp/20 px-3 py-2 text-accent-dp font-semibold shadow-glow">Dynamic Programming</p>
                 <p className="rounded-lg bg-accent-string/20 px-3 py-2 text-accent-string font-semibold shadow-glow">String Matching</p>
+                <p className="rounded-lg border border-orange-300/25 bg-orange-400/15 px-3 py-2 text-orange-200 font-semibold">Stacks</p>
+                <p className="rounded-lg border border-cyan-300/25 bg-cyan-400/15 px-3 py-2 text-cyan-200 font-semibold">Queues</p>
+                <p className="rounded-lg border border-purple-300/25 bg-purple-400/15 px-3 py-2 text-purple-200 font-semibold">Linked Lists</p>
+                <p className="rounded-lg border border-lime-300/25 bg-lime-400/15 px-3 py-2 text-lime-200 font-semibold">Trees</p>
               </div>
             </div>
         </div>

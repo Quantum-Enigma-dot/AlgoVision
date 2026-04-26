@@ -26,6 +26,10 @@ CODE = """def floyd_warshall(nodes, edges):
 """
 
 
+def _serialize_table(table: List[List[float]]) -> List[List[float | None]]:
+    return [[(None if value == float("inf") else round(float(value), 6)) for value in row] for row in table]
+
+
 def run(input_data: Dict[str, Any], _options: Dict[str, Any]) -> Dict[str, Any]:
     nodes, edges, _adj = parse_graph(input_data)
     n = len(nodes)
@@ -62,7 +66,7 @@ def run(input_data: Dict[str, Any], _options: Dict[str, Any]) -> Dict[str, Any]:
                             "row": i,
                             "col": j,
                             "value": dist[i][j],
-                            "table": [row[:] for row in dist],
+                            "table": _serialize_table(dist),
                         }
                     )
 

@@ -4,6 +4,7 @@ import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import { TrendingUp, Play, Loader2, Download } from "lucide-react";
 import { runBenchmark } from "../services/api.js";
 import { ALGORITHM_CATALOG, formatCategoryOptions, getAlgorithmDisplayName, normalizeCategoryLabel } from "../data/algorithms.js";
+import ComplexityTable from "../components/ComplexityTable.jsx";
 
 const DEFAULT_SIZES = [10, 50, 100, 250, 500, 1000];
 
@@ -94,6 +95,14 @@ const Benchmark = ({ algorithmsData = [] }) => {
 
   const algo1Name = getAlgorithmDisplayName(selectedAlgorithm);
   const algo2Name = secondAlgorithm ? getAlgorithmDisplayName(secondAlgorithm) : "";
+  const algo1 = useMemo(
+    () => algorithms.find((a) => a.name === selectedAlgorithm) || null,
+    [algorithms, selectedAlgorithm]
+  );
+  const algo2 = useMemo(
+    () => algorithms.find((a) => a.name === secondAlgorithm) || null,
+    [algorithms, secondAlgorithm]
+  );
 
   return (
     <div className="space-y-6">
@@ -173,6 +182,28 @@ const Benchmark = ({ algorithmsData = [] }) => {
               {loading ? "Benchmarking..." : "Run Benchmark"}
             </button>
           </div>
+
+          {(algo1?.complexity || algo2?.complexity) && (
+            <div className="rounded-2xl panel p-5 space-y-3">
+              <h3 className="text-sm font-semibold text-sky">Complexity Snapshot</h3>
+              {algo1?.complexity && (
+                <ComplexityTable
+                  complexity={algo1.complexity}
+                  nMeaning={algo1.nMeaning}
+                  compact
+                  title={algo1Name}
+                />
+              )}
+              {algo2?.complexity && (
+                <ComplexityTable
+                  complexity={algo2.complexity}
+                  nMeaning={algo2.nMeaning}
+                  compact
+                  title={algo2Name}
+                />
+              )}
+            </div>
+          )}
 
           {results && (
             <div className="rounded-2xl panel p-5 space-y-3">

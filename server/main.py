@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.routes import algorithms, compare, health, run, theory, ai, benchmark, playground, codeviz, algo_visualize
+from app.routes import algorithms, compare, health, run, theory, ai, benchmark, playground, codeviz, algo_visualize, practice, complexity_forensics
 
 app = FastAPI(title="AlgoVision API", version="2.0.0")
 
@@ -23,4 +23,6 @@ app.include_router(benchmark.router, prefix="/api")
 app.include_router(playground.router, prefix="/api")
 app.include_router(codeviz.router, prefix="/api")
 app.include_router(algo_visualize.router, prefix="/api")
+app.include_router(practice.router, prefix="/api")
+app.include_router(complexity_forensics.router, prefix="/api")
 

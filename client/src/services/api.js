@@ -1,7 +1,9 @@
 import axios from "axios";
 
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api").replace(/\/$/, "");
+
 const api = axios.create({
-  baseURL: "http://localhost:8000/api",
+  baseURL: API_BASE_URL,
   timeout: 30000
 });
 
@@ -37,8 +39,15 @@ export const aiSuggest = async (problem) => {
   return response.data;
 };
 
-export const aiAnalyze = async (code, language = "python") => {
-  const response = await api.post("/ai/analyze", { code, language });
+export const aiGenerateCode = async (prompt, language = "python") => {
+  const response = await api.post("/ai/generate-code", { prompt, language });
+  return response.data;
+};
+
+// --- Complexity Forensics (Offline) ---
+
+export const analyzeComplexityForensics = async (code, language = "python") => {
+  const response = await api.post("/complexity-forensics/analyze", { code, language });
   return response.data;
 };
 
@@ -53,6 +62,11 @@ export const runBenchmark = async (category, algorithm, sizes) => {
 
 export const runPlayground = async (code, language = "python") => {
   const response = await api.post("/playground/run", { code, language });
+  return response.data;
+};
+
+export const judgePracticeCode = async (payload) => {
+  const response = await api.post("/practice/judge", payload);
   return response.data;
 };
 

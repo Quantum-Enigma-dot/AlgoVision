@@ -3,24 +3,27 @@ import { motion } from "framer-motion";
 import { useSearchParams } from "react-router-dom";
 import TheoryCard from "../components/TheoryCard.jsx";
 import { getAlgorithmDisplayName } from "../data/algorithms.js";
+import { buildUnifiedMetadataMap } from "../data/algorithmMetadata.js";
 
 const Theory = ({ algorithmsData = [] }) => {
   const [searchParams] = useSearchParams();
   const initial = searchParams.get("algorithm") || algorithmsData[0]?.name || "bubble_sort";
   const [selectedAlgorithm, setSelectedAlgorithm] = useState(initial);
   const algorithms = algorithmsData;
+  const metadataMap = useMemo(() => buildUnifiedMetadataMap(algorithms), [algorithms]);
 
   const activeAlgorithm = useMemo(
     () => algorithms.find((algo) => algo.name === selectedAlgorithm) || algorithms[0] || null,
     [algorithms, selectedAlgorithm]
   );
+  const activeMetadata = activeAlgorithm ? metadataMap[activeAlgorithm.name] : null;
 
   const theory = activeAlgorithm
     ? {
         name: getAlgorithmDisplayName(activeAlgorithm.name),
         category: activeAlgorithm.category,
         description: activeAlgorithm.description,
-        complexity: activeAlgorithm.complexity,
+        complexity: activeMetadata?.complexity || activeAlgorithm.complexity,
         use_cases: activeAlgorithm.use_cases || [],
         limitations: activeAlgorithm.limitations || [],
         optimization_tips: activeAlgorithm.optimization_tips || []

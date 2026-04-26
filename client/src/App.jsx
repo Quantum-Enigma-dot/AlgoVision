@@ -8,10 +8,11 @@ import Compare from "./pages/Compare.jsx";
 import Theory from "./pages/Theory.jsx";
 import Report from "./pages/Report.jsx";
 import AIAdvisor from "./pages/AIAdvisor.jsx";
+import ComplexityForensics from "./pages/ComplexityForensics.jsx";
 import Benchmark from "./pages/Benchmark.jsx";
 import Playground from "./pages/Playground.jsx";
-import AlgoVisualizer from "./pages/AlgoVisualizer.jsx";
-import { ALGORITHM_CATALOG } from "./data/algorithms.js";
+import Practice from "./pages/Practice.jsx";
+import { ALGORITHM_CATALOG, ANALYZER_ALGORITHM_CATALOG } from "./data/algorithms.js";
 
 const PageWrapper = ({ children }) => (
   <motion.div
@@ -27,13 +28,14 @@ const PageWrapper = ({ children }) => (
 const App = () => {
   const location = useLocation();
   const algorithmsData = ALGORITHM_CATALOG;
+  const analyzerAlgorithmsData = ANALYZER_ALGORITHM_CATALOG;
 
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
         <Route element={<Layout />}>
           <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />
-          <Route path="/analyzer" element={<PageWrapper><Analyzer algorithmsData={algorithmsData} /></PageWrapper>} />
+          <Route path="/analyzer" element={<PageWrapper><Analyzer algorithmsData={analyzerAlgorithmsData} /></PageWrapper>} />
           <Route path="/analyse" element={<Navigate to="/analyzer" replace />} />
           <Route path="/analyze" element={<Navigate to="/analyzer" replace />} />
           <Route path="/compare" element={<PageWrapper><Compare algorithmsData={algorithmsData} /></PageWrapper>} />
@@ -41,9 +43,11 @@ const App = () => {
           <Route path="/reports" element={<PageWrapper><Report /></PageWrapper>} />
           <Route path="/report" element={<Navigate to="/reports" replace />} />
           <Route path="/ai-advisor" element={<PageWrapper><AIAdvisor /></PageWrapper>} />
+          <Route path="/complexity-forensics" element={<PageWrapper><ComplexityForensics /></PageWrapper>} />
           <Route path="/benchmark" element={<PageWrapper><Benchmark algorithmsData={algorithmsData} /></PageWrapper>} />
+          <Route path="/practice" element={<PageWrapper><Practice algorithmsData={analyzerAlgorithmsData} /></PageWrapper>} />
           <Route path="/playground" element={<PageWrapper><Playground /></PageWrapper>} />
-          <Route path="/algo-visualizer" element={<PageWrapper><AlgoVisualizer /></PageWrapper>} />
+          <Route path="/algo-visualizer" element={<Navigate to="/ai-advisor?tab=visualize" replace />} />
         </Route>
       </Routes>
     </AnimatePresence>

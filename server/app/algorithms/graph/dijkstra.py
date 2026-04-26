@@ -24,6 +24,16 @@ def dijkstra(graph, start):
 """
 
 
+def _serialize_distances(dist: Dict[str, float]) -> Dict[str, float | None]:
+    serialized: Dict[str, float | None] = {}
+    for node, value in dist.items():
+        if value == float("inf"):
+            serialized[node] = None
+        else:
+            serialized[node] = round(float(value), 6)
+    return serialized
+
+
 def run(input_data: Dict[str, Any], _options: Dict[str, Any]) -> Dict[str, Any]:
     nodes, _edges, adj = parse_graph(input_data)
     start = str(input_data.get("start", nodes[0] if nodes else ""))
@@ -34,7 +44,7 @@ def run(input_data: Dict[str, Any], _options: Dict[str, Any]) -> Dict[str, Any]:
 
     if not start:
         return {
-            "result": dist,
+            "result": _serialize_distances(dist),
             "steps": steps,
             "metrics": {
                 "comparisons": 0,
@@ -56,7 +66,7 @@ def run(input_data: Dict[str, Any], _options: Dict[str, Any]) -> Dict[str, Any]:
             {
                 "type": "extract",
                 "current": node,
-                "distances": dict(dist),
+                "distances": _serialize_distances(dist),
                 "queue": list(pq),
             }
         )
@@ -70,13 +80,13 @@ def run(input_data: Dict[str, Any], _options: Dict[str, Any]) -> Dict[str, Any]:
                     {
                         "type": "relax",
                         "edge": {"from": node, "to": neighbor},
-                        "distances": dict(dist),
+                        "distances": _serialize_distances(dist),
                         "queue": list(pq),
                     }
                 )
 
     return {
-        "result": dist,
+        "result": _serialize_distances(dist),
         "steps": steps,
         "metrics": {
             "comparisons": comparisons,

@@ -1,23 +1,24 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Bot, TrendingUp, Terminal, BarChart2, BookOpen, GitCompare, Cpu, Layers, Zap, Code2, Users } from "lucide-react";
-import { ALGORITHM_CATALOG, normalizeCategoryLabel } from "../data/algorithms.js";
-
-const STATS = [
-  { label: "Algorithms", value: "24+", icon: Cpu },
-  { label: "Categories", value: "4", icon: Layers },
-  { label: "Languages", value: "4", icon: Code2 },
-  { label: "Visualizations", value: "Live", icon: Zap },
-];
+import { ArrowRight, Bot, TrendingUp, Terminal, BarChart2, BookOpen, GitCompare, Cpu, Layers, Zap, Code2, Users, FlaskConical } from "lucide-react";
+import { ALGORITHM_CATALOG, getLanguages, normalizeCategoryLabel } from "../data/algorithms.js";
 
 const FEATURES = [
   {
     title: "Algorithm Analyzer",
-    description: "Run algorithms step-by-step with live visualizations, D3 charts, and execution logs.",
+    description: "Run algorithms step-by-step with live visualizations, synced code highlighting, and voice-guided explanations.",
     color: "from-emerald-500/30 to-teal-500/10",
     borderHover: "hover:border-emerald-300/40",
     icon: BarChart2,
     to: "/analyzer",
+  },
+  {
+    title: "Practice Lab (Offline Q++)",
+    description: "Generate local AI-like algorithm challenges with easy, medium, and hard levels. No external API calls.",
+    color: "from-teal-500/30 to-emerald-500/10",
+    borderHover: "hover:border-teal-300/40",
+    icon: FlaskConical,
+    to: "/practice",
   },
   {
     title: "Compare & Benchmark",
@@ -28,12 +29,20 @@ const FEATURES = [
     to: "/compare",
   },
   {
-    title: "AI Algorithm Advisor",
-    description: "Get AI-powered explanations, algorithm suggestions, and complexity analysis via Groq LLM.",
+    title: "AI Advisor",
+    description: "Get algorithm explanations, problem-based suggestions, and guided tutoring.",
     color: "from-violet-500/30 to-purple-500/10",
     borderHover: "hover:border-violet-300/40",
     icon: Bot,
     to: "/ai-advisor",
+  },
+  {
+    title: "Complexity Forensics (Offline)",
+    description: "Paste C, Python, C++, Java, or Go code and get offline time/space complexity with a reasoning trace.",
+    color: "from-amber-500/30 to-yellow-500/10",
+    borderHover: "hover:border-amber-300/40",
+    icon: Code2,
+    to: "/complexity-forensics",
   },
   {
     title: "Theory Library",
@@ -53,7 +62,7 @@ const FEATURES = [
   },
   {
     title: "Code Playground",
-    description: "Write, edit, and run Python algorithms in a sandboxed environment with instant output.",
+    description: "Write, edit, and run Python, C, C++, JavaScript, Java, and Go in one sandboxed environment.",
     color: "from-pink-500/30 to-rose-500/10",
     borderHover: "hover:border-pink-300/40",
     icon: Terminal,
@@ -73,6 +82,13 @@ const Home = () => {
   ALGORITHM_CATALOG.forEach((a) => {
     categoryAlgoCounts[a.category] = (categoryAlgoCounts[a.category] || 0) + 1;
   });
+
+  const stats = [
+    { label: "Algorithms", value: `${ALGORITHM_CATALOG.length}+`, icon: Cpu },
+    { label: "Categories", value: String(Object.keys(categoryAlgoCounts).length), icon: Layers },
+    { label: "Languages", value: String(getLanguages().length), icon: Code2 },
+    { label: "Visualizations", value: "Live + Voice", icon: Zap },
+  ];
 
   return (
     <div className="space-y-10">
@@ -126,7 +142,7 @@ const Home = () => {
               transition={{ delay: 0.2 }}
               className="max-w-xl text-base leading-7 text-sky/70"
             >
-              The ultimate platform for understanding algorithms. Watch step-by-step execution, benchmark scalability, get AI-powered insights, and write code — all in one place.
+              The upgraded algorithm lab: voice-guided visual execution, offline Complexity Forensics for C/Python/C++/Java/Go, benchmarking, and multilingual playground execution.
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 10 }}
@@ -144,7 +160,13 @@ const Home = () => {
                 to="/ai-advisor"
                 className="rounded-full border border-violet-200/40 bg-violet-400/20 px-6 py-3 text-sm font-semibold text-violet-100 transition hover:-translate-y-0.5 hover:bg-violet-300/30"
               >
-                Ask AI Advisor
+                Open AI Tutor
+              </Link>
+              <Link
+                to="/complexity-forensics"
+                className="rounded-full border border-amber-200/40 bg-amber-400/20 px-6 py-3 text-sm font-semibold text-amber-100 transition hover:-translate-y-0.5 hover:bg-amber-300/30"
+              >
+                Open Complexity Forensics
               </Link>
               <Link
                 to="/benchmark"
@@ -164,7 +186,7 @@ const Home = () => {
           >
             <h2 className="text-lg font-semibold text-sky">Platform at a Glance</h2>
             <div className="mt-5 grid grid-cols-2 gap-4">
-              {STATS.map((stat, i) => {
+              {stats.map((stat, i) => {
                 const Icon = stat.icon;
                 return (
                   <motion.div

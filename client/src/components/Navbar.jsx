@@ -1,4 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
+import ThemeToggle from "./ThemeToggle.jsx";
 
 const Navbar = ({ isSidebarCollapsed, onToggleSidebar }) => {
   return (
@@ -16,20 +17,23 @@ const Navbar = ({ isSidebarCollapsed, onToggleSidebar }) => {
             <span className="bg-gradient-to-r from-emerald-300 via-cyan-300 to-violet-300 bg-clip-text text-transparent">Algo</span>Vision
           </Link>
         </div>
-        <nav className="hidden items-center gap-1 text-sm font-medium md:flex">
-          <NavLink to="/analyzer" className={({ isActive }) => `transition px-3 py-1.5 rounded-lg ${isActive ? 'bg-accent-sorting/20 text-accent-sorting shadow-glow' : 'text-sky/70 hover:text-accent-sorting hover:bg-accent-sorting/10'}`}>Analyzer</NavLink>
-          <NavLink to="/compare" className={({ isActive }) => `transition px-3 py-1.5 rounded-lg ${isActive ? 'bg-accent-graph/20 text-accent-graph shadow-glow' : 'text-sky/70 hover:text-accent-graph hover:bg-accent-graph/10'}`}>Compare</NavLink>
-          <NavLink to="/ai-advisor" className={({ isActive }) => `transition px-3 py-1.5 rounded-lg ${isActive ? 'bg-violet-400/20 text-violet-300 shadow-[0_0_20px_rgba(139,92,246,0.15)]' : 'text-sky/70 hover:text-violet-300 hover:bg-violet-400/10'}`}>
-            AI Advisor
-          </NavLink>
-          <NavLink to="/benchmark" className={({ isActive }) => `transition px-3 py-1.5 rounded-lg ${isActive ? 'bg-cyan-400/20 text-cyan-300' : 'text-sky/70 hover:text-cyan-300 hover:bg-cyan-400/10'}`}>Benchmark</NavLink>
-          <NavLink to="/playground" className={({ isActive }) => `transition px-3 py-1.5 rounded-lg ${isActive ? 'bg-pink-400/20 text-pink-300' : 'text-sky/70 hover:text-pink-300 hover:bg-pink-400/10'}`}>Playground</NavLink>
-          <NavLink to="/algo-visualizer" className={({ isActive }) => `transition px-3 py-1.5 rounded-lg ${isActive ? 'bg-cyan-400/20 text-cyan-300 shadow-[0_0_20px_rgba(34,211,238,0.12)]' : 'text-sky/70 hover:text-cyan-300 hover:bg-cyan-400/10'}`}>
-            Visualizer
-          </NavLink>
-          <NavLink to="/theory" className={({ isActive }) => `transition px-3 py-1.5 rounded-lg ${isActive ? 'bg-accent-dp/20 text-accent-dp shadow-glow' : 'text-sky/70 hover:text-accent-dp hover:bg-accent-dp/10'}`}>Theory</NavLink>
-          <NavLink to="/reports" className={({ isActive }) => `transition px-3 py-1.5 rounded-lg ${isActive ? 'bg-accent-string/20 text-accent-string shadow-glow' : 'text-sky/70 hover:text-accent-string hover:bg-accent-string/10'}`}>Reports</NavLink>
-        </nav>
+        <div className="flex items-center gap-3">
+          <nav className="hidden items-center gap-1 text-sm font-medium md:flex">
+            <NavLink to="/analyzer" className={({ isActive }) => `transition px-3 py-1.5 rounded-lg ${isActive ? 'bg-accent-sorting/20 text-accent-sorting shadow-glow' : 'text-sky/70 hover:text-accent-sorting hover:bg-accent-sorting/10'}`}>Analyzer</NavLink>
+            <NavLink to="/compare" className={({ isActive }) => `transition px-3 py-1.5 rounded-lg ${isActive ? 'bg-accent-graph/20 text-accent-graph shadow-glow' : 'text-sky/70 hover:text-accent-graph hover:bg-accent-graph/10'}`}>Compare</NavLink>
+            <NavLink to="/ai-advisor" className={({ isActive }) => `transition px-3 py-1.5 rounded-lg ${isActive ? 'bg-violet-400/20 text-violet-300 shadow-[0_0_20px_rgba(139,92,246,0.15)]' : 'text-sky/70 hover:text-violet-300 hover:bg-violet-400/10'}`}>
+              AI Advisor
+            </NavLink>
+            <NavLink to="/complexity-forensics" className={({ isActive }) => `transition px-3 py-1.5 rounded-lg ${isActive ? 'bg-amber-400/20 text-amber-200 shadow-[0_0_20px_rgba(245,158,11,0.12)]' : 'text-sky/70 hover:text-amber-200 hover:bg-amber-400/10'}`}>
+              Complexity Forensics
+            </NavLink>
+            <NavLink to="/benchmark" className={({ isActive }) => `transition px-3 py-1.5 rounded-lg ${isActive ? 'bg-cyan-400/20 text-cyan-300' : 'text-sky/70 hover:text-cyan-300 hover:bg-cyan-400/10'}`}>Benchmark</NavLink>
+            <NavLink to="/playground" className={({ isActive }) => `transition px-3 py-1.5 rounded-lg ${isActive ? 'bg-pink-400/20 text-pink-300' : 'text-sky/70 hover:text-pink-300 hover:bg-pink-400/10'}`}>Playground</NavLink>
+            <NavLink to="/theory" className={({ isActive }) => `transition px-3 py-1.5 rounded-lg ${isActive ? 'bg-accent-dp/20 text-accent-dp shadow-glow' : 'text-sky/70 hover:text-accent-dp hover:bg-accent-dp/10'}`}>Theory</NavLink>
+            <NavLink to="/reports" className={({ isActive }) => `transition px-3 py-1.5 rounded-lg ${isActive ? 'bg-accent-string/20 text-accent-string shadow-glow' : 'text-sky/70 hover:text-accent-string hover:bg-accent-string/10'}`}>Reports</NavLink>
+          </nav>
+          <ThemeToggle />
+        </div>
       </div>
     </header>
   );

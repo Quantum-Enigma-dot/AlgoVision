@@ -7,6 +7,18 @@ def _is_num_list(values: Any) -> bool:
     return isinstance(values, list) and all(isinstance(item, (int, float)) for item in values)
 
 
+def _is_op_list(values: Any) -> bool:
+    if not isinstance(values, list):
+        return False
+    for item in values:
+        if not isinstance(item, dict):
+            return False
+        op = str(item.get("op", "")).strip()
+        if not op:
+            return False
+    return True
+
+
 def validate_run_input(category: str, algorithm: str, input_data: Dict[str, Any]) -> None:
     if category == "sorting":
         array = input_data.get("array")
@@ -19,6 +31,7 @@ def validate_run_input(category: str, algorithm: str, input_data: Dict[str, Any]
     if category == "graph":
         nodes = input_data.get("nodes")
         edges = input_data.get("edges")
+        allow_negative_weights = algorithm == "bellman_ford"
         if not isinstance(nodes, list) or len(nodes) == 0:
             raise ValueError("Invalid input: provide graph nodes.")
         if not isinstance(edges, list) or len(edges) == 0:
@@ -33,7 +46,9 @@ def validate_run_input(category: str, algorithm: str, input_data: Dict[str, Any]
             weight = edge.get("weight", 1)
             if src not in node_set or dst not in node_set:
                 raise ValueError("Invalid input: each edge endpoint must exist in nodes.")
-            if not isinstance(weight, (int, float)) or weight < 0:
+            if not isinstance(weight, (int, float)):
+                raise ValueError("Invalid input: graph weights must be numbers.")
+            if not allow_negative_weights and weight < 0:
                 raise ValueError("Invalid input: graph weights must be non-negative numbers.")
 
         start = str(input_data.get("start", ""))
@@ -73,11 +88,16 @@ def validate_run_input(category: str, algorithm: str, input_data: Dict[str, Any]
         text_a = input_data.get("text_a")
         text_b = input_data.get("text_b")
         if not isinstance(text_a, str) or not isinstance(text_b, str) or not text_a or not text_b:
-            raise ValueError("Invalid input: text_a and text_b are required for LCS.")
+            raise ValueError("Invalid input: text_a and text_b are required for this DP algorithm.")
         return
 
     if category == "string":
         text = input_data.get("text")
+        if algorithm == "huffman_coding":
+            if not isinstance(text, str) or len(text) == 0:
+                raise ValueError("Invalid input: text must be a non-empty string for Huffman coding.")
+            return
+
         pattern = input_data.get("pattern")
         if not isinstance(text, str) or not isinstance(pattern, str):
             raise ValueError("Invalid input: text and pattern must be strings.")
@@ -85,6 +105,27 @@ def validate_run_input(category: str, algorithm: str, input_data: Dict[str, Any]
             raise ValueError("Invalid input: text and pattern cannot be empty.")
         if len(pattern) > len(text):
             raise ValueError("Invalid input: pattern length must not exceed text length.")
+        return
+
+    if category in {"stack", "queue", "linked_list", "tree"}:
+        initial_values = input_data.get("initial_values", [])
+        operations = input_data.get("operations", [])
+
+        if initial_values is not None and not isinstance(initial_values, list):
+            raise ValueError("Invalid input: initial_values must be a list.")
+        if not _is_op_list(operations):
+            raise ValueError("Invalid input: operations must be a list of operation objects with an 'op' field.")
+
+        if category in {"stack", "queue"}:
+            capacity = input_data.get("capacity", 0)
+            if capacity is not None and (not isinstance(capacity, int) or capacity <= 0):
+                raise ValueError("Invalid input: capacity must be a positive integer.")
+
+        if category == "tree" and algorithm in {"b_tree", "b_plus_tree"}:
+            order = input_data.get("order", 4)
+            if not isinstance(order, int) or order < 3 or order > 32:
+                raise ValueError("Invalid input: B-tree order must be an integer between 3 and 32.")
+
         return
 
     raise ValueError("Invalid input: unsupported category.")

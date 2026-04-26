@@ -7,6 +7,7 @@ AlgoVision is a polished mini project for Design and Analysis of Algorithms. It 
 - Sorting, graph, DP, and string-matching visualizations
 - Side-by-side algorithm comparison with charts
 - Theory cards with complexity, use cases, and optimization tips
+- Complexity Forensics: fully offline code complexity analysis for C, Python, C++, Java, and Go
 - Export results and keep local run history
 - Dark/light mode toggle and responsive layout
 
@@ -66,10 +67,20 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
+Create `server/.env` for AI Advisor:
+```env
+GROQ_API_KEY=your_groq_api_key_here
+```
+
 ### Frontend
 ```bash
 cd client
 npm install
+```
+
+Optional `client/.env` override if your backend is not on localhost:8000:
+```env
+VITE_API_BASE_URL=http://localhost:8000/api
 ```
 
 ## Run
@@ -94,6 +105,15 @@ Open http://localhost:5173
 - `POST /api/run`
 - `POST /api/compare`
 - `GET /api/theory/{algorithm_name}`
+- `POST /api/complexity-forensics/analyze`
+
+Example `POST /api/complexity-forensics/analyze`:
+```json
+{
+  "language": "python",
+  "code": "def f(arr):\n    for i in range(len(arr)):\n        for j in range(len(arr)):\n            pass"
+}
+```
 
 Example `POST /api/run`:
 ```json

@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import AlgorithmSelector from "../components/AlgorithmSelector.jsx";
 import InputPanel from "../components/InputPanel.jsx";
 import ComparisonChart from "../components/ComparisonChart.jsx";
+import ComplexityTable from "../components/ComplexityTable.jsx";
 import { compareAlgorithms } from "../services/api.js";
 import { buildPayloadAndValidate } from "../utils/validators.js";
 import {
@@ -35,6 +36,16 @@ const Compare = ({ algorithmsData = [] }) => {
   const filteredAlgorithms = useMemo(() => {
     return algorithms.filter((algo) => algo.category === selectedCategory);
   }, [algorithms, selectedCategory]);
+
+  const leftAlgorithmMeta = useMemo(
+    () => filteredAlgorithms.find((algo) => algo.name === leftAlgorithm) || null,
+    [filteredAlgorithms, leftAlgorithm]
+  );
+
+  const rightAlgorithmMeta = useMemo(
+    () => filteredAlgorithms.find((algo) => algo.name === rightAlgorithm) || null,
+    [filteredAlgorithms, rightAlgorithm]
+  );
 
   useEffect(() => {
     if (filteredAlgorithms.length >= 2) {
@@ -182,6 +193,33 @@ const Compare = ({ algorithmsData = [] }) => {
         </aside>
 
         <section className="space-y-6">
+          <div className="rounded-2xl panel p-5">
+            <h2 className="text-lg font-semibold text-sky">Complexity Snapshot</h2>
+            <p className="mt-2 text-sm text-sky/60">Theoretical time/space bounds for the selected algorithms.</p>
+            <div className="mt-4 grid gap-4 md:grid-cols-2">
+              {leftAlgorithmMeta ? (
+                <ComplexityTable
+                  compact
+                  title={leftAlgorithmMeta.display_name}
+                  complexity={leftAlgorithmMeta.complexity}
+                  nMeaning={leftAlgorithmMeta.nMeaning}
+                />
+              ) : (
+                <div className="rounded-xl border border-white/10 bg-white/5 p-4 text-sm text-sky/55">Select an algorithm.</div>
+              )}
+              {rightAlgorithmMeta ? (
+                <ComplexityTable
+                  compact
+                  title={rightAlgorithmMeta.display_name}
+                  complexity={rightAlgorithmMeta.complexity}
+                  nMeaning={rightAlgorithmMeta.nMeaning}
+                />
+              ) : (
+                <div className="rounded-xl border border-white/10 bg-white/5 p-4 text-sm text-sky/55">Select an algorithm.</div>
+              )}
+            </div>
+          </div>
+
           <div className="rounded-2xl panel p-5">
             <h2 className="text-lg font-semibold text-sky">Performance Snapshot</h2>
             <div className="mt-4">

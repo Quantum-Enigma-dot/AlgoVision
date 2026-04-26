@@ -39,5 +39,6 @@ export const dpPresets = {
 
 export const stringPresets = {
   text: "ababcabcabababd",
-  pattern: "ababd"
+  pattern: "ababd",
+  huffmanText: "beep boop beer!"
 };

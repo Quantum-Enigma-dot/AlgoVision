@@ -1,4 +1,4 @@
-import ComplexityBadge from "./ComplexityBadge.jsx";
+import ComplexityTable from "./ComplexityTable.jsx";
 import { normalizeCategoryLabel } from "../data/algorithms.js";
 import { Link } from "react-router-dom";
 
@@ -23,11 +23,8 @@ const TheoryCard = ({ theory, nMeaning, algorithmName, howItWorks, keyInsight, w
         <p className="mt-2">{keyInsight}</p>
       </div>
 
-      <div className="mt-4 grid gap-3 md:grid-cols-2">
-        <ComplexityBadge label="Best" value={theory.complexity.best_time} note={nMeaning?.best_time} />
-        <ComplexityBadge label="Average" value={theory.complexity.average_time} note={nMeaning?.average_time} />
-        <ComplexityBadge label="Worst" value={theory.complexity.worst_time} note={nMeaning?.worst_time} />
-        <ComplexityBadge label="Space" value={theory.complexity.space} note={nMeaning?.space} />
+      <div className="mt-4">
+        <ComplexityTable complexity={theory.complexity} nMeaning={nMeaning} title="Complexity Table" />
       </div>
       <div className="mt-4 grid gap-4 text-sm text-sky/75 md:grid-cols-3">
         <div className="rounded-xl border border-white/10 bg-white/5 p-4">

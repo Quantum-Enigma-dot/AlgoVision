@@ -112,12 +112,25 @@ def _fallback_response(code: str) -> dict:
     lines = code.strip().split("\n")
     lower = code.lower()
     has_sort = any(kw in lower for kw in ["sort", "swap", "bubble", "merge", "quick", "heap", "insertion", "selection"])
+    has_huffman = any(kw in lower for kw in ["huffman", "minheapnode", "optimal prefix"])
     has_tree = any(kw in lower for kw in ["->left", "->right", "root", "inorder", "preorder", "postorder", "bst", "binary tree", "createnode", "treenode", "struct node"])
     has_graph = any(kw in lower for kw in ["graph", "bfs", "dfs", "dijkstra", "adjacent", "neighbor", "vertex", "edge", "adj["])
     has_dp = any(kw in lower for kw in ["dp[", "dp =", "knapsack", "lcs", "memo", "tabulation", "dynamic"])
     has_string = any(kw in lower for kw in ["pattern", "kmp", "rabin", "naive_search", "lps"])
 
-    if has_sort:
+    if has_huffman:
+        from app.algorithms.string_matching.huffman_coding import run as run_huffman
+        res = run_huffman({"text": "ALGO VISION"}, {})
+        return {
+            "algorithm_type": "string", "algorithm_name": "Huffman Coding",
+            "description": "Detected Huffman Coding from the pasted code. Generating optimal prefix tree.",
+            "visualization_type": "string",
+            "complexity": {"best_time": "O(n log k)", "average_time": "O(n log k)", "worst_time": "O(n log k)", "space": "O(k)"},
+            "input_data": {"text": "ALGO VISION"},
+            "steps": res["steps"],
+            "model": "native",
+        }
+    elif has_sort:
         algo_type = "sorting"
         viz_type = "sorting"
         name = "Sorting Algorithm"
@@ -230,6 +243,12 @@ def algo_visualize_endpoint(payload: AlgoVisualizeRequest) -> AlgoVisualizeRespo
     code = payload.code.strip()
     if not code:
         raise HTTPException(status_code=400, detail="No code provided.")
+
+    lower = code.lower()
+    has_huffman = any(kw in lower for kw in ["huffman", "minheapnode", "optimal prefix"])
+    if has_huffman:
+        data = _fallback_response(code)
+        return AlgoVisualizeResponse(**data)
 
     client = _get_client()
     if client is None:

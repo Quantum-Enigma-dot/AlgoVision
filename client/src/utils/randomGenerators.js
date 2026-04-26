@@ -6,6 +6,25 @@ export const generateRandomSortingInput = (size = 10) => {
   return { arrayText: array.join(","), arraySize: safeSize };
 };
 
+export const generateRandomSearchInput = (algorithm) => {
+  if (algorithm === "binary_search") {
+    const size = randomInt(7, 12);
+    const values = Array.from({ length: size }, () => randomInt(1, 99)).sort((a, b) => a - b);
+    const target = Math.random() > 0.35
+      ? values[randomInt(0, values.length - 1)]
+      : randomInt(1, 99);
+    return {
+      arrayText: values.join(","),
+      targetValue: target
+    };
+  }
+
+  const values = Array.from({ length: randomInt(6, 10) }, () => randomInt(1, 99));
+  return {
+    arrayText: values.join(",")
+  };
+};
+
 export const generateRandomGraphInput = () => {
   const count = randomInt(5, 9);
   const nodes = Array.from({ length: count }, (_, index) => String.fromCharCode(65 + index));
@@ -61,7 +80,8 @@ export const generateRandomGraphInput = () => {
     directed,
     weighted,
     startNode: nodes[0],
-    sinkNode: nodes[nodes.length - 1]
+    sinkNode: nodes[nodes.length - 1],
+    maxColors: randomInt(3, Math.min(6, count))
   };
 };
 
@@ -99,7 +119,16 @@ export const generateRandomDpInput = (algorithm) => {
   };
 };
 
-export const generateRandomStringInput = () => {
+export const generateRandomStringInput = (algorithm) => {
+  if (algorithm === "huffman_coding") {
+    const corpus = [
+      "huffman coding builds optimal prefix trees",
+      "design and analysis of algorithms project",
+      "data compression loves repeated symbols"
+    ];
+    return { text: corpus[randomInt(0, corpus.length - 1)] };
+  }
+
   const alphabet = "abcde";
   const textLength = randomInt(15, 28);
   const patternLength = randomInt(3, 6);
@@ -107,4 +136,96 @@ export const generateRandomStringInput = () => {
   const start = randomInt(0, Math.max(0, text.length - patternLength));
   const pattern = Math.random() > 0.3 ? text.slice(start, start + patternLength) : "edc";
   return { text, pattern };
+};
+
+export const generateRandomBacktrackingInput = (algorithm) => {
+  if (algorithm === "queens_8_problem") {
+    return { boardSize: Math.random() > 0.7 ? randomInt(5, 8) : 8 };
+  }
+
+  return {};
+};
+
+export const generateRandomDataStructureInput = (category, algorithm) => {
+  const values = Array.from({ length: randomInt(3, 6) }, () => randomInt(1, 40));
+
+  if (category === "stack") {
+    return {
+      initialValuesText: values.slice(0, 3).join(","),
+      capacity: 8,
+      operationType: "push",
+      operationsText: `push ${randomInt(10, 99)}\npeek\npop\nisEmpty\nisFull`
+    };
+  }
+
+  if (category === "queue") {
+    if (algorithm === "priority_queue") {
+      return {
+        initialValuesText: values.slice(0, 2).join(","),
+        capacity: 8,
+        operationType: "enqueue",
+        operationsText: `enqueue ${randomInt(20, 90)} ${randomInt(1, 5)}\nenqueue ${randomInt(20, 90)} ${randomInt(1, 5)}\nfront\ndequeue\nrear\nisFull`
+      };
+    }
+    if (algorithm === "deque") {
+      return {
+        initialValuesText: values.slice(0, 3).join(","),
+        capacity: 10,
+        operationType: "enqueue_front",
+        operationsText: `enqueue_front ${randomInt(20, 90)}\nenqueue_rear ${randomInt(20, 90)}\nfront\ndequeue_rear\nrear\nisEmpty`
+      };
+    }
+    return {
+      initialValuesText: values.slice(0, 3).join(","),
+      capacity: 8,
+      operationType: "enqueue",
+      operationsText: `enqueue ${randomInt(10, 99)}\nfront\ndequeue\nrear\nisFull`
+    };
+  }
+
+  if (category === "linked_list") {
+    return {
+      initialValuesText: values.join(","),
+      operationType: "insert_begin",
+      operationsText: `insert_begin ${randomInt(50, 90)}\ninsert_end ${randomInt(50, 90)}\ninsert_pos ${randomInt(50, 90)} 2\nsearch ${values[1] || values[0]}\nreverse\ntraverse`
+    };
+  }
+
+  if (category === "tree") {
+    if (algorithm === "trie") {
+      const words = ["algo", "algae", "alloy", "tree", "trie"];
+      return {
+        initialValuesText: words.slice(0, 3).join(","),
+        operationType: "insert",
+        operationTraversal: "inorder",
+        operationsText: `insert algebra\nsearch algo\nprefix_search al\ndelete tree\ntraverse`
+      };
+    }
+    if (algorithm === "b_tree" || algorithm === "b_plus_tree") {
+      const sorted = [...values].sort((a, b) => a - b);
+      return {
+        initialValuesText: sorted.join(","),
+        order: randomInt(3, 6),
+        operationType: "insert",
+        operationTraversal: "inorder",
+        operationsText: `insert ${randomInt(10, 99)}\nsearch ${sorted[1] || sorted[0]}\ndelete ${sorted[0]}\ntraverse levelorder`
+      };
+    }
+    if (algorithm === "min_heap" || algorithm === "max_heap") {
+      return {
+        initialValuesText: values.join(","),
+        operationType: "insert",
+        operationTraversal: "levelorder",
+        operationsText: `insert ${randomInt(10, 99)}\nsearch ${values[0]}\nheapify\ntraverse levelorder\ndelete`
+      };
+    }
+    return {
+      initialValuesText: values.join(","),
+      operationType: "insert",
+      operationTraversal: "inorder",
+      operationsText: `insert ${randomInt(41, 95)}\nsearch ${values[0]}\ntraverse inorder\ndelete ${values[1] || values[0]}\ntraverse levelorder`
+    };
+  }
+
+  return {};
 };

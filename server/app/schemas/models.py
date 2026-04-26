@@ -65,9 +65,49 @@ class AIAnalyzeRequest(BaseModel):
     language: Optional[str] = "python"
 
 
+class AICodeGenerationRequest(BaseModel):
+    prompt: str
+    language: Optional[str] = "python"
+
+
 class AIResponse(BaseModel):
     response: str
     model: str = ""
+
+
+class AICodeGenerationResponse(BaseModel):
+    code: str
+    explanation: str = ""
+    detected_algorithm: str = ""
+    model: str = ""
+
+
+# --- Complexity Forensics Schemas ---
+
+class ComplexityForensicsRequest(BaseModel):
+    code: str
+    language: Optional[str] = "python"
+
+
+class ComplexityForensicsHotspot(BaseModel):
+    line_number: int
+    snippet: str
+    signals: List[str] = Field(default_factory=list)
+
+
+class ComplexityForensicsResponse(BaseModel):
+    language: str
+    model: str
+    training_profile: str
+    supported_languages: List[str] = Field(default_factory=list)
+    dominant_pattern: str
+    time_complexity: Dict[str, str]
+    space_complexity: str
+    confidence: str
+    explanation: List[str] = Field(default_factory=list)
+    reasoning_trace: List[str] = Field(default_factory=list)
+    hotspots: List[ComplexityForensicsHotspot] = Field(default_factory=list)
+    report: str
 
 
 # --- Benchmark Schemas ---
@@ -102,3 +142,37 @@ class PlaygroundResponse(BaseModel):
     output: str
     error: str = ""
     execution_time_ms: float = 0
+
+
+# --- Practice Judge Schemas ---
+
+class PracticeTestCase(BaseModel):
+    case_id: str
+    input_data: str
+    expected_output: str
+    is_sample: bool = False
+
+
+class PracticeJudgeRequest(BaseModel):
+    code: str
+    language: Optional[str] = "python"
+    test_cases: List[PracticeTestCase]
+
+
+class PracticeJudgeCaseResult(BaseModel):
+    case_id: str
+    is_sample: bool
+    passed: bool
+    runtime_ms: float = 0
+    expected_output: str = ""
+    actual_output: str = ""
+    error: str = ""
+
+
+class PracticeJudgeResponse(BaseModel):
+    language: str
+    all_passed: bool
+    passed_count: int
+    total_count: int
+    compile_error: str = ""
+    results: List[PracticeJudgeCaseResult] = Field(default_factory=list)
